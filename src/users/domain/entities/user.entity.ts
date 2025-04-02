@@ -1,12 +1,18 @@
+import { Entity } from '@/shared/domain/entities/entity'
+
 export type UserProps = {
   name: string
   email: string
   password: string
   createdAt?: Date
 }
-
-export class UserEntity {
-  constructor(public readonly props: UserProps) {
+// INFO: implementing (consciously) a library in the domain layer (UUID), knowing that we are breaking a rule of clean architecture from the abstract Entity class
+export class UserEntity extends Entity<UserProps> {
+  constructor(
+    public readonly props: UserProps,
+    id?: string,
+  ) {
+    super(props, id)
     this.props.createdAt = this.props.createdAt ?? new Date()
   }
 

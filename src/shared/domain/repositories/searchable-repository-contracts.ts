@@ -18,12 +18,12 @@ export class SearchParams {
   protected _sortDirection?: SortDirection | null
   protected _filter?: string | null
 
-  constructor(props: SearchProps) {
-    this._page = props.page
-    this._perPage = props.perPage
-    this._sort = props.sort
-    this._sortDirection = props.sortDirection
-    this._filter = props.filter
+  constructor(props: SearchProps = {}) {
+    this.page = props.page!
+    this.perPage = props.perPage!
+    this.sort = props.sort!
+    this.sortDirection = props.sortDirection!
+    this.filter = props.filter!
   }
 
   get page() {

@@ -21,14 +21,14 @@ export type SearchResultProps<E extends Entity, Filter> = {
   filter: Filter | null
 }
 
-export class SearchParams {
-  protected _page?: number
-  protected _perPage? = 15
-  protected _sort?: string | null
-  protected _sortDirection?: SortDirection | null
-  protected _filter?: string | null
+export class SearchParams<Filter = string> {
+  protected _page: number
+  protected _perPage = 15
+  protected _sort: string | null
+  protected _sortDirection: SortDirection | null
+  protected _filter: Filter | null
 
-  constructor(props: SearchProps = {}) {
+  constructor(props: SearchProps<Filter> = {}) {
     this.page = props.page!
     this.perPage = props.perPage!
     this.sort = props.sort!
@@ -37,7 +37,7 @@ export class SearchParams {
   }
 
   get page() {
-    return this._page!
+    return this._page
   }
 
   private set page(value: number) {
@@ -49,14 +49,14 @@ export class SearchParams {
   }
 
   get perPage() {
-    return this._perPage!
+    return this._perPage
   }
 
   private set perPage(value: number) {
     let _perPage = value === (true as any) ? this._perPage : +value
     if (
       Number.isNaN(_perPage) ||
-      _perPage! <= 0 ||
+      _perPage <= 0 ||
       parseInt(_perPage as any) !== _perPage
     ) {
       _perPage = this._perPage
@@ -65,7 +65,7 @@ export class SearchParams {
   }
 
   get sort() {
-    return this._sort!
+    return this._sort
   }
 
   private set sort(value: string | null) {
@@ -74,7 +74,7 @@ export class SearchParams {
   }
 
   get sortDirection() {
-    return this._sortDirection!
+    return this._sortDirection
   }
 
   private set sortDirection(value: string | null) {
@@ -86,11 +86,11 @@ export class SearchParams {
     this._sortDirection = dir !== 'asc' && dir !== 'desc' ? 'desc' : dir
   }
 
-  get filter() {
-    return this._filter!
+  get filter(): Filter | null {
+    return this._filter
   }
 
-  private set filter(value: string | null) {
+  private set filter(value: Filter | null) {
     this._filter =
       value === null || value === undefined || value === ''
         ? null
@@ -133,10 +133,11 @@ export class SearchResult<E extends Entity, Filter = string> {
   }
 }
 
-export interface ISearchableRepository<
+export interface SearchableRepositoryInterface<
   E extends Entity,
-  SearchInput,
-  SearchOutput,
+  Filter = string,
+  SearchInput = SearchParams,
+  SearchOutput = SearchResult<E, Filter>,
 > extends IRepository<E> {
-  search(props: SearchParams): Promise<SearchOutput>
+  search(props: SearchInput): Promise<SearchOutput>
 }

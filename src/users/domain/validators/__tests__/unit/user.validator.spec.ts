@@ -91,7 +91,6 @@ describe('UserValidator unit tests', () => {
     ])
 
     isValid = sut.validate({ ...props, password: 10 as any })
-    console.log(sut.errors!['password'])
     expect(isValid).toBeFalsy()
     expect(sut.errors!['password']).toStrictEqual([
       'password must be shorter than or equal to 100 characters',

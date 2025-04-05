@@ -7,7 +7,7 @@ export abstract class InMemoryRepository<E extends Entity>
 {
   items: E[] = []
 
-  async inset(entity: E): Promise<void> {
+  async insert(entity: E): Promise<void> {
     this.items.push(entity)
   }
 

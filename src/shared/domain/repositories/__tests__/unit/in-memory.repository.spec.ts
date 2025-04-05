@@ -20,7 +20,7 @@ describe('InMemoryRepository unit tests', () => {
 
   it('Should inserts a new entitty', async () => {
     const entity = new StubEntity({ name: 'test name', price: 50 })
-    await sut.inset(entity)
+    await sut.insert(entity)
     expect(entity.toJSON()).toStrictEqual(sut.items[0].toJSON())
   })
 
@@ -32,14 +32,14 @@ describe('InMemoryRepository unit tests', () => {
 
   it('Should find a entity by id', async () => {
     const entity = new StubEntity({ name: 'test name', price: 50 })
-    await sut.inset(entity)
+    await sut.insert(entity)
     const result = await sut.findById(entity.id)
     await expect(entity.toJSON()).toStrictEqual(result.toJSON())
   })
 
   it('Should return all entities', async () => {
     const entity = new StubEntity({ name: 'test name', price: 50 })
-    await sut.inset(entity)
+    await sut.insert(entity)
     const result = await sut.findAll()
     await expect([entity]).toStrictEqual(result)
   })
@@ -53,7 +53,7 @@ describe('InMemoryRepository unit tests', () => {
 
   it('Should update an entity', async () => {
     const entity = new StubEntity({ name: 'test name', price: 50 })
-    await sut.inset(entity)
+    await sut.insert(entity)
     const entityUpdated = new StubEntity(
       {
         name: 'updated name',
@@ -73,7 +73,7 @@ describe('InMemoryRepository unit tests', () => {
 
   it('Should delete an entity', async () => {
     const entity = new StubEntity({ name: 'test name', price: 50 })
-    await sut.inset(entity)
+    await sut.insert(entity)
     await sut.delete(entity._id)
     await expect(sut.items).toHaveLength(0)
   })

@@ -46,7 +46,6 @@ describe('InMemoryRepository unit tests', () => {
 
   it('Should throw error on update when entity not found', async () => {
     const entity = new StubEntity({ name: 'test name', price: 50 })
-    await sut.inset(entity)
     await expect(sut.update(entity)).rejects.toThrow(
       new NotFoundError('Entity not found!'),
     )

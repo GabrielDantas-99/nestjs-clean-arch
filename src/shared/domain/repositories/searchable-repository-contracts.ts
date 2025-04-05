@@ -136,7 +136,7 @@ export class SearchResult<E extends Entity, Filter = string> {
 export interface ISearchableRepository<
   E extends Entity,
   Filter = string,
-  SearchInput = SearchParams,
+  SearchInput = SearchParams<Filter>,
   SearchOutput = SearchResult<E, Filter>,
 > extends IRepository<E> {
   sortableFields: string[]

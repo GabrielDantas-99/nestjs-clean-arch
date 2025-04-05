@@ -1,12 +1,54 @@
 import { Entity } from '../entities/entity'
 import { InMemoryRepository } from './in-memory.repository'
-import { ISearchableRepository } from './searchable-repository-contracts'
+import {
+  ISearchableRepository,
+  SearchParams,
+  SearchResult,
+} from './searchable-repository-contracts'
 
 export abstract class InMemorySearchableRepository<E extends Entity>
   extends InMemoryRepository<E>
   implements ISearchableRepository<E, any, any>
 {
-  search(props: any): Promise<any> {
-    throw new Error('Method not implemented.')
+  sortableFields: string[] = []
+
+  async search(props: SearchParams): Promise<SearchResult<E>> {
+    const itemsFiltered = await this.applyFilter(this.items, props.filter)
+    const itemsSorted = await this.applySort(
+      itemsFiltered,
+      props.sort,
+      props.sortDirection,
+    )
+    const itemsPaginated = await this.applyPaginate(
+      itemsSorted,
+      props.page,
+      props.perPage,
+    )
+    return new SearchResult({
+      items: itemsPaginated,
+      total: itemsFiltered.length,
+      currentPage: props.page,
+      perPage: props.perPage,
+      sort: props.sort,
+      sortDirection: props.sortDirection,
+      filter: props.filter,
+    })
   }
+
+  protected abstract applyFilter(
+    items: E[],
+    filter: string | null,
+  ): Promise<E[]>
+
+  protected async applySort(
+    items: E[],
+    sort: string | null,
+    sortDirection: string | null,
+  ): Promise<E[]> {}
+
+  protected async applyPaginate(
+    items: E[],
+    page: SearchParams['page'],
+    perPage: SearchParams['perPage'],
+  ): Promise<E[]> {}
 }

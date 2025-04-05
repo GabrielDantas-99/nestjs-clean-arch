@@ -44,7 +44,20 @@ export abstract class InMemorySearchableRepository<E extends Entity>
     items: E[],
     sort: string | null,
     sortDirection: string | null,
-  ): Promise<E[]> {}
+  ): Promise<E[]> {
+    if (!sort || !this.sortableFields.includes(sort)) {
+      return items
+    }
+    return [...items].sort((a, b) => {
+      if (a.props[sort] < b.props[sort]) {
+        return sortDirection === 'asc' ? -1 : 1
+      }
+      if (a.props[sort] > b.props[sort]) {
+        return sortDirection === 'asc' ? 1 : -1
+      }
+      return 0
+    })
+  }
 
   protected async applyPaginate(
     items: E[],

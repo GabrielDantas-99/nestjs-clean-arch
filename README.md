@@ -32,6 +32,31 @@ O projeto é organizado em camadas, seguindo os princípios da Clean Architectur
 - **CI/CD com GitHub Actions:** Configuração de um workflow de Integração Contínua (CI) com GitHub Actions.
 - **Deploy em Produção:** Implementação de um processo de deploy contínuo a partir do repositório do GitHub.
 
+## Casos de Uso:
+
+### Regras de negócio (RN)
+
+- Os campos name, email e password serão de preenchimento obrigatório.
+- O campo createdAt será de preenchimento opcional.
+- O usuário não deve poder se cadastrar com e-mail duplicado.
+
+### Requisitos funcionais (RF)
+
+- Deve ser possível se cadastrar.
+- Deve ser possível se autenticar.
+- Deve ser possível exibir os dados de um usuário.
+- Deve ser possível listar todos os usuários.
+- Deve ser possível atualizar o nome de um usuário.
+- Deve ser possível atualizar a senha de um usuário.
+- Deve ser possível excluir um usuário.
+
+### Requisitos não-funcionais (RNF)
+
+- A senha do usuário precisa estar criptografada.
+- Os dados da aplicação precisam estar persistidos em um banco de dados Postgres.
+- Todas as listas de dados precisam estar paginadas com 15 itens por página.
+- O usuário deve ser identificado por um JWT (JSON Web Token).
+
 ## Como Executar
 
 1.  Clone o repositório: `git clone https://github.com/aluiziodeveloper/nestjs-clean-arch`

@@ -21,21 +21,17 @@ export namespace SigninUseCase {
 
     async execute(input: Input): Promise<Output> {
       const { email, password } = input
-
       if (!email || !password) {
         throw new BadRequestError('Input data not provided')
       }
-
       const entity = await this.userRepository.findByEmail(email)
       const hashPasswordMatches = await this.hashProvider.compareHash(
         password,
         entity.password,
       )
-
       if (!hashPasswordMatches) {
         throw new InvalidCredentialsError('Invalid credentials')
       }
-
       return UserOutputMapper.toOutput(entity)
     }
   }

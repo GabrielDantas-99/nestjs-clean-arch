@@ -5,7 +5,6 @@ export namespace DeleteUserUseCase {
   export type Input = {
     id: string
   }
-
   export type Output = void
 
   export class UseCase implements DefaultUseCase<Input, Output> {

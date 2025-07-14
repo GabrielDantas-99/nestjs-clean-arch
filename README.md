@@ -1,4 +1,4 @@
-# NestJS Clean Architecture & DDD API
+# NestJS Clean Architecture | End-to-End Tests | DDD API
 
 [![Nest][nest.js]][nest-url]
 [![Next][next.js]][next-url]
